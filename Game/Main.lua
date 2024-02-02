@@ -5,6 +5,7 @@ function love.load()
     Sprite1 = love.graphics.newImage("Images/Sprite-0001.png")
     Sprite2 = love.graphics.newImage("Images/Sprite-0002.png")
     tree = love.graphics.newImage("Images/tree.png")
+    House = love.graphics.newImage("Images/House.png")
     _G.var1 = true
     p1 = {
         PosX = 200,
@@ -15,24 +16,36 @@ function love.load()
         altura = Sprite1:getHeight()
     }
 
-    arvores = {}
+    _G.arvores = {}
+    casa = {
+        PosX = 500,
+        PosY = 100,
+        altura = 200,
+        largura = 500
+    }
 end
 
 function love.update(dt)
+    _G.DT = dt
 
     -- Movimentação
-
+     novaX = p1.PosX
+     novaY = p1.PosY
     if love.keyboard.isDown("a") then
-        p1.PosX = p1.PosX - p1.Velocidade * dt
+        p1.PosX = novaX - p1.Velocidade * dt
+        p1.Direcao = "esquerda"
     end
     if love.keyboard.isDown("d") then
-        p1.PosX = p1.PosX + p1.Velocidade * dt
+        p1.PosX = novaX + p1.Velocidade * dt
+        p1.Direcao = "direita"
     end
     if love.keyboard.isDown("s") then
-        p1.PosY = p1.PosY + p1.Velocidade * dt
+        p1.PosY = novaY + p1.Velocidade * dt
+        p1.Direcao = "baixo"
     end
     if love.keyboard.isDown("w") then
-        p1.PosY = p1.PosY - p1.Velocidade * dt
+        p1.PosY = novaY - p1.Velocidade * dt
+        p1.Direcao = "cima"
     end
 
     -- Limitação de mapa
@@ -47,38 +60,47 @@ function love.update(dt)
     elseif p1.PosY > love.graphics.getWidth() - p1.altura then
         p1.PosY = love.graphics.getWidth() - p1.altura
     end
-
-    -- Arvores
-
-    if var1 then
-        for i = 1, 10 do
-            local novaArvore = {
-                largura = 80,
-                altura = 120,
-                PosX = math.random(0, love.graphics.getWidth() - 80),
-                PosY = math.random(0, love.graphics.getHeight() - 120)
-            }
-            table.insert(arvores, novaArvore)
-        end
-        var1 = false
-    end
-
-    -- Hitbox
-    
 end
 
 function love.draw()
     -- Background
+
     love.graphics.draw(background, 0, 0, 0, love.graphics.getWidth() / background:getWidth(), love.graphics.getHeight() / background:getHeight())
-    love.graphics.draw(Sprite1, p1.PosX,p1.PosY)
-    
-    -- Arvores II
 
-    for _, arvores in ipairs(arvores) do
-        love.graphics.draw(tree, arvores.PosX, arvores.PosY)
+    -- Animação
+
+    if p1.Direcao == "parado" or p1.Direcao == "cima" then
+        love.graphics.draw(Sprite1, p1.PosX,p1.PosY)
+    elseif p1.Direcao == "baixo" or p1.Direcao == "esquerda" or p1.Direcao == "direita" then
+        love.graphics.draw(Sprite2, p1.PosX,p1.PosY)
+        p1.Direcao = "parado"
     end
-end
 
-function VerColisao(x1, y1, w1, h1, x2, y2, w2, h2)
-    return x1 < x2 + w2 and x1 + w1 > x2 and y1 < y2 + h2 and y1 + h1 > y2
+    -- Casa 
+
+    love.graphics.draw(House, casa.PosX, casa.PosY)
+    if VerColisao(p1.PosX,p1.PosY,p1.altura,p1.largura, casa.PosX, casa.PosY, casa.largura, casa.altura) then
+        if love.keyboard.isDown("a") then
+            p1.PosX = novaX + p1.Velocidade * DT
+            p1.Direcao = "esquerda"
+        end
+        if love.keyboard.isDown("d") then
+            p1.PosX = novaX - p1.Velocidade * DT
+            p1.Direcao = "direita"
+        end
+    end
+    if VerColisao(p1.PosX,p1.PosY,p1.altura,p1.largura, casa.PosX, casa.PosY, casa.largura, casa.altura) then
+        if love.keyboard.isDown("s") then
+            p1.PosY = novaY - p1.Velocidade * DT
+            p1.Direcao = "baixo"
+        end
+        if love.keyboard.isDown("w") then
+            p1.PosY = novaY + p1.Velocidade * DT
+            p1.Direcao = "cima"
+        end
+    end
+
+    if VerColisao(p1.PosX,p1.PosY,p1.altura,p1.largura, casa.PosX, casa.PosY, casa.largura + 50, casa.altura + 50) and love.keyboard.isDown("e") then
+        love.graphics.clear()
+    end
 end
