@@ -128,7 +128,6 @@ function love.draw()
             p1.Direcao = "cima"
         end
     end
-    if VerColisao(p1.PosX,p1.PosY,p1.altura,p1.largura, arvore.PosX, arvore.PosY, arvore.largura, arvore.altura) then
-        
+    if VerColisao(p1.PosX,p1.PosY,p1.altura + 50,p1.largura + 50, arvore.PosX, arvore.PosY, arvore.largura, arvore.altura) and love.keyboard.isDown("e") then
     end
 end
