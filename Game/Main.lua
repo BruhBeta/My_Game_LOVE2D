@@ -134,8 +134,10 @@ function love.draw()
             item = {
                 madeira = true
            }
-           table.insert(p1, item)
         end
+        setmetatable(p1, {__index = item})
     end
-
+    if p1.madeira then
+        love.graphics.print("Inventory: Madeira +1", 50, 0, 0, 2)
+    end
 end
