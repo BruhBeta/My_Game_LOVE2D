@@ -81,7 +81,6 @@ end
 function love.draw()
 
     -- Background
-
     love.graphics.draw(background, 0, 0, 0, love.graphics.getWidth() / background:getWidth(), love.graphics.getHeight() / background:getHeight())
 
     -- Animação
@@ -217,6 +216,4 @@ function love.draw()
             love.graphics.print("Parabens!",0,0,0,2)
         end
     end
-
-    -- Construcao da casa..
 end
