@@ -7,6 +7,7 @@ function love.load()
     tree = love.graphics.newImage("Images/tree.png")
     House = love.graphics.newImage("Images/House.png")
     _G.var1 = true
+    _G.var = true
     p1 = {
         PosX = 200,
         PosY = 200,
@@ -106,28 +107,35 @@ function love.draw()
     end
 
     -- Arvore
-    
-    love.graphics.draw(tree, arvore.PosX, arvore.PosY)
-    if VerColisao(p1.PosX,p1.PosY,p1.altura,p1.largura, arvore.PosX, arvore.PosY, arvore.largura, arvore.altura) then
-        if love.keyboard.isDown("a") then
-            p1.PosX = novaX + p1.Velocidade * DT
-            p1.Direcao = "esquerda"
+    if var == true then
+        love.graphics.draw(tree, arvore.PosX, arvore.PosY)
+        if VerColisao(p1.PosX,p1.PosY,p1.altura,p1.largura, arvore.PosX, arvore.PosY, arvore.largura, arvore.altura) then
+            if love.keyboard.isDown("a") then
+                p1.PosX = novaX + p1.Velocidade * DT
+                p1.Direcao = "esquerda"
+            end
+            if love.keyboard.isDown("d") then
+                p1.PosX = novaX - p1.Velocidade * DT
+                p1.Direcao = "direita"
+            end
         end
-        if love.keyboard.isDown("d") then
-            p1.PosX = novaX - p1.Velocidade * DT
-            p1.Direcao = "direita"
+        if VerColisao(p1.PosX,p1.PosY,p1.altura,p1.largura, arvore.PosX, arvore.PosY, arvore.largura, arvore.altura) then
+            if love.keyboard.isDown("s") then
+                p1.PosY = novaY - p1.Velocidade * DT
+                p1.Direcao = "baixo"
+            end
+            if love.keyboard.isDown("w") then
+                p1.PosY = novaY + p1.Velocidade * DT
+                p1.Direcao = "cima"
+            end
+        end
+        if VerColisao(p1.PosX,p1.PosY,p1.altura + 50,p1.largura + 50, arvore.PosX, arvore.PosY, arvore.largura + 50,arvore.altura + 50) and love.keyboard.isDown("e") then
+            var = false
+            item = {
+                madeira = true
+           }
+           table.insert(p1, item)
         end
     end
-    if VerColisao(p1.PosX,p1.PosY,p1.altura,p1.largura, arvore.PosX, arvore.PosY, arvore.largura, arvore.altura) then
-        if love.keyboard.isDown("s") then
-            p1.PosY = novaY - p1.Velocidade * DT
-            p1.Direcao = "baixo"
-        end
-        if love.keyboard.isDown("w") then
-            p1.PosY = novaY + p1.Velocidade * DT
-            p1.Direcao = "cima"
-        end
-    end
-    if VerColisao(p1.PosX,p1.PosY,p1.altura + 50,p1.largura + 50, arvore.PosX, arvore.PosY, arvore.largura, arvore.altura) and love.keyboard.isDown("e") then
-    end
+
 end
