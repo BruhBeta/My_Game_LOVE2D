@@ -8,6 +8,7 @@ function love.load()
     House = love.graphics.newImage("Images/House.png")
     _G.var1 = true
     _G.var = true
+    _G.quarto = false
     p1 = {
         PosX = 200,
         PosY = 200,
@@ -105,6 +106,10 @@ function love.draw()
             p1.Direcao = "cima"
         end
     end
+    
+    if VerColisao(p1.PosX,p1.PosY,p1.altura + 50,p1.largura + 50, casa.PosX, casa.PosY, casa.largura + 50, casa.altura + 50) and love.keyboard.isDown("e") then
+        quarto = true
+    end
 
     -- Arvore
     if var == true then
@@ -140,4 +145,10 @@ function love.draw()
     if p1.madeira then
         love.graphics.print("Inventory: Madeira +1", 50, 0, 0, 2)
     end
+
+    if quarto == true then
+        love.graphics.clear()
+    end
+
+    -- Construcao da casa..
 end
