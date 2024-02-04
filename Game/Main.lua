@@ -8,6 +8,7 @@ function love.load()
     House = love.graphics.newImage("Images/House.png")
     Interior = love.graphics.newImage("Images/Interior.png")
     Cama = love.graphics.newImage("Images/Cama.png")
+    Pedra = love.graphics.newImage("Images/Pedra.png")
     _G.var1 = true
     _G.var = true
     _G.quarto = false
@@ -131,21 +132,21 @@ function love.draw()
         if var == true then
             if VerColisao(p1.PosX,p1.PosY,p1.altura,p1.largura, arvore.PosX, arvore.PosY, arvore.largura, arvore.altura) then
                 if love.keyboard.isDown("a") then
-                    p1.PosX = novaX + p1.Velocidade * DT
+                    p1.PosX = novaX + p1.Velocidade * DT / 100
                     p1.Direcao = "esquerda"
                 end
                 if love.keyboard.isDown("d") then
-                    p1.PosX = novaX - p1.Velocidade * DT
+                    p1.PosX = novaX - p1.Velocidade * DT / 100
                     p1.Direcao = "direita"
                 end
             end
             if VerColisao(p1.PosX,p1.PosY,p1.altura,p1.largura, arvore.PosX, arvore.PosY, arvore.largura, arvore.altura) then
                 if love.keyboard.isDown("s") then
-                    p1.PosY = novaY - p1.Velocidade * DT
+                    p1.PosY = novaY - p1.Velocidade * DT / 100
                     p1.Direcao = "baixo"
                 end
                 if love.keyboard.isDown("w") then
-                    p1.PosY = novaY + p1.Velocidade * DT
+                    p1.PosY = novaY + p1.Velocidade * DT / 100
                     p1.Direcao = "cima"
                 end
             end
