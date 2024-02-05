@@ -163,6 +163,8 @@ function love.draw()
         love.graphics.print("Inventory: Madeira +1", 50, 0, 0, 2)
     end
 
+    -- Quarto
+
     if quarto == true then
         colisao = false
         love.graphics.clear()
